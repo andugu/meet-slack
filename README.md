@@ -1,6 +1,6 @@
 # meet-slack
 
-Set a Slack status (📅 "On a meeting") automatically while you are in a Google
+Set a Slack status (🗓️ "In a meeting") automatically while you are in a Google
 Meet, including unplanned meets that never hit your calendar. Local-only, zero
 third-party services, plain shell.
 

@@ -9,8 +9,8 @@ set -u
 # Keep STATUS_TEXT / STATUS_EMOJI free of " \ and control chars (newlines/tabs):
 # they are interpolated into JSON without escaping, and the text is matched
 # verbatim to decide ownership on exit.
-STATUS_TEXT="On a meeting"
-STATUS_EMOJI=":date:"                   # :date: renders as 📅 (Slack's :calendar: is the tear-off 📆)
+STATUS_TEXT="In a meeting"
+STATUS_EMOJI=":spiral_calendar_pad:"   # renders as 🗓️ (use :date: for 📅 or :calendar: for 📆)
 KEYCHAIN_SERVICE="meet-slack"          # stored by install.sh via: security add-generic-password -s meet-slack ...
 STATE_FILE="$HOME/.config/meet-slack/state"
 # ----------------------------------------------------------------------------

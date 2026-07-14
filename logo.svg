@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <clipPath id="cal">
+      <rect x="132" y="158" width="248" height="226" rx="30"/>
+    </clipPath>
+  </defs>
+
+  <!-- app-icon rounded square -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- binder rings -->
+  <rect x="187" y="128" width="26" height="52" rx="13" fill="#ffffff"/>
+  <rect x="299" y="128" width="26" height="52" rx="13" fill="#ffffff"/>
+
+  <!-- calendar body -->
+  <rect x="132" y="158" width="248" height="226" rx="30" fill="#ffffff"/>
+
+  <!-- header band (clipped to the rounded body top) -->
+  <g clip-path="url(#cal)">
+    <rect x="132" y="158" width="248" height="62" fill="#4F46E5"/>
+  </g>
+
+  <!-- video-camera glyph: "a scheduled video meeting" -->
+  <rect x="170" y="256" width="128" height="92" rx="20" fill="#4F46E5"/>
+  <polygon points="298,278 340,256 340,348 298,326" fill="#4F46E5"/>
+
+  <!-- presence dot: active / on a call -->
+  <circle cx="372" cy="168" r="30" fill="#ffffff"/>
+  <circle cx="372" cy="168" r="20" fill="#22C55E"/>
+</svg>

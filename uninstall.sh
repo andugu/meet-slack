@@ -1,16 +1,15 @@
 #!/bin/bash
-# uninstall.sh - stop and remove the launchd agent and delete the Keychain token.
-# No `set -e`: this is best-effort cleanup, keep going even if a piece is gone.
+# Remove the launchd agent, installed copy, and Keychain token. Best-effort, so no set -e.
 set -uo pipefail
 
 LABEL="com.andugu.meetslack"
 SERVICE="meet-slack"
 DEST="$HOME/Library/LaunchAgents/$LABEL.plist"
 CONFIG_DIR="$HOME/.config/meet-slack"
+INSTALL_DIR="$HOME/Library/Application Support/meet-slack"
 DOMAIN="gui/$(id -u)"
 
-# Clear any status we may have set, BEFORE we delete the token, so uninstalling
-# mid-meet does not leave you stuck showing "On a Meet call".
+# Clear the status before deleting the token, so uninstalling mid-meet doesn't pin it.
 TOKEN=$(security find-generic-password -s "$SERVICE" -a slack -w 2>/dev/null || true)
 if [ -n "$TOKEN" ]; then
     curl -s --max-time 10 -X POST https://slack.com/api/users.profile.set \
@@ -21,14 +20,7 @@ fi
 
 launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
 rm -f "$DEST"
-echo "Removed launchd agent."
-
-if security find-generic-password -s "$SERVICE" -a slack >/dev/null 2>&1; then
-    security delete-generic-password -s "$SERVICE" -a slack >/dev/null
-    echo "Deleted token from Keychain."
-else
-    echo "No Keychain token found."
-fi
-
+rm -rf "$INSTALL_DIR"
+security delete-generic-password -s "$SERVICE" -a slack >/dev/null 2>&1 || true
 rm -f "$CONFIG_DIR/state"
-echo "Done. (Log at $CONFIG_DIR/meet-slack.log left in place; delete it if you like.)"
+echo "Uninstalled meet-slack (log left at $CONFIG_DIR/meet-slack.log)."

@@ -88,10 +88,20 @@ free of `"` and `\` (they go into JSON unescaped).
 
 ## Manual install (if you prefer not to use install.sh)
 
+The committed plist ships placeholder paths (`install.sh` fills them in), so a
+manual install must set them too. Run from inside the repo folder:
+
 ```sh
 security add-generic-password -s meet-slack -a slack -w 'xoxp-YOUR-TOKEN' -U -A
+mkdir -p ~/.config/meet-slack
 cp com.andugu.meetslack.plist ~/Library/LaunchAgents/
-launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.andugu.meetslack.plist
+PL=~/Library/LaunchAgents/com.andugu.meetslack.plist
+/usr/libexec/PlistBuddy \
+  -c "Set :ProgramArguments:0 $PWD/meet-slack.sh" \
+  -c "Set :StandardOutPath $HOME/.config/meet-slack/meet-slack.log" \
+  -c "Set :StandardErrorPath $HOME/.config/meet-slack/meet-slack.log" \
+  "$PL"
+launchctl bootstrap "gui/$(id -u)" "$PL"
 ```
 
 ## Known limitations
